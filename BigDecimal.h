@@ -16,6 +16,11 @@ public:
     BigDecimalInt operator+ (BigDecimalInt anotherDec);
     BigDecimalInt operator- (BigDecimalInt anotherDec);
     bool operator< (BigDecimalInt anotherDec);
+    bool operator> (BigDecimalInt anotherDec);
+    bool operator== (BigDecimalInt anotherDec);
+    int Size(BigDecimalInt anotherDec);
+    int sign(BigDecimalInt anotherDec);
+
     friend ostream& operator<< (ostream& out, BigDecimalInt b);
 };
 
