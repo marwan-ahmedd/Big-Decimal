@@ -26,7 +26,7 @@ void BigDecimalInt::fillZeros(int maxSize, string& str1, string& str2)
 
 // ------------------------> Constructors
 BigDecimalInt :: BigDecimalInt(string decStr): str{decStr}
-{
+{//takes a number in a string(the numbers are entered in a string form : "123")
     if (str[0] == '+'){
         if (str[1] == '-' || str[1] == ' '){
             cout << decStr << "is an invalid number."<<endl;
@@ -36,7 +36,7 @@ BigDecimalInt :: BigDecimalInt(string decStr): str{decStr}
     }
 }
 BigDecimalInt :: BigDecimalInt(int decInt): str {to_string(decInt)}
-{
+{//the numbers are entered in an int form : (123) then, changed into a string.
     if (str[0] == '+'){
         if (str[1] == '-' || str[1] == ' '){
             cout << decInt << "is an invalid number."<<endl;
@@ -57,12 +57,12 @@ BigDecimalInt BigDecimalInt::operator+ (BigDecimalInt anotherDec){
     if(str1.length() > str2.length()){
         swap(str1,str2);
     }
-    if (str1[0] == '-' ){
+    if (str1[0] == '-' ){ // if str1 is -ve then operator-() is called,  the operation'll be str2 - str1
         str1 = str1.substr(1);
         BigDecimalInt num1(str2);
         BigDecimalInt subtract = num1 - str1;
         return subtract;
-    }else if (str2[0] == '-'){
+    }else if (str2[0] == '-'){// if str2 is -ve then operator-() is called, the operation'll be str1 - str2
         str2 = str2.substr(1);
         BigDecimalInt num2(str1);
         BigDecimalInt subtract = num2 - str2;
@@ -74,10 +74,9 @@ BigDecimalInt BigDecimalInt::operator+ (BigDecimalInt anotherDec){
         int sum = (str1[i] - '0') + (str2[j] - '0') + carry;
         carry = sum / 10;
         result = to_string(sum % 10) + result;
-        if (i == 0){
+        if (i == 0){//Printing the remaining numbers
             while (j > 0){
                 int sum =(str2[j] - '0');
-                //carry = sum / 10;
                 result = to_string(sum % 10) + result;
                 j--;
             }
