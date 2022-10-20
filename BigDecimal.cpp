@@ -25,17 +25,67 @@ void BigDecimalInt::fillZeros(int maxSize, string& str1, string& str2)
 }
 
 // ------------------------> Constructors
-BigDecimalInt::BigDecimalInt(string decStr):
-    str {decStr} {}
-
-BigDecimalInt::BigDecimalInt(int decInt = 0):
-    str {to_string(decInt)} {}
+BigDecimalInt :: BigDecimalInt(string decStr): str{decStr}
+{
+    if (str[0] == '+'){
+        if (str[1] == '-' || str[1] == ' '){
+            cout << decStr << "is an invalid number."<<endl;
+        }else{
+            str = str.substr(1);
+        }
+    }
+}
+BigDecimalInt :: BigDecimalInt(int decInt): str {to_string(decInt)}
+{
+    if (str[0] == '+'){
+        if (str[1] == '-' || str[1] == ' '){
+            cout << decInt << "is an invalid number."<<endl;
+        }else{
+            str = str.substr(1);
+        }
+    }
+}
 
 
 // -------------------> Operator + overloading <-------------------- \\
 
+BigDecimalInt BigDecimalInt::operator+ (BigDecimalInt anotherDec){
+    string str1 = str;
+    string str2 = anotherDec.str;
+    string result = "";
+    int carry = 0;
+    if(str1.length() > str2.length()){
+        swap(str1,str2);
+    }
+    if (str1[0] == '-' ){
+        str1 = str1.substr(1);
+        BigDecimalInt num1(str2);
+        BigDecimalInt subtract = num1 - str1;
+        return subtract;
+    }else if (str2[0] == '-'){
+        str2 = str2.substr(1);
+        BigDecimalInt num2(str1);
+        BigDecimalInt subtract = num2 - str2;
+        return subtract;
+    }
+    int j = str2.length()-1;
+    int i = str1.length()-1;
+    for (;i >= 0; --i,--j) {
+        int sum = (str1[i] - '0') + (str2[j] - '0') + carry;
+        carry = sum / 10;
+        result = to_string(sum % 10) + result;
+        if (i == 0){
+            while (j > 0){
+                int sum =(str2[j] - '0');
+                //carry = sum / 10;
+                result = to_string(sum % 10) + result;
+                j--;
+            }
+        }
+    }
 
-
+    return result;
+}
 // -------------------> Operator - overloading <-------------------- \\
 
 BigDecimalInt BigDecimalInt::operator- (BigDecimalInt anotherDec)
@@ -48,7 +98,7 @@ BigDecimalInt BigDecimalInt::operator- (BigDecimalInt anotherDec)
     if (second[0] == '+')
         second = second.substr(1);
 
-        
+
     if (first[0] == '-' && second[0] == '-')
     {
         first = first.substr(1);
@@ -70,7 +120,7 @@ BigDecimalInt BigDecimalInt::operator- (BigDecimalInt anotherDec)
     {
         //(if the second is negative, then call Add (100 - (-100) = 100+100)
         BigDecimalInt negative(second.substr(1)); // removing the -ve sign;
-        
+
         BigDecimalInt thisStr(first);
 
         return thisStr + negative;
@@ -139,7 +189,7 @@ bool BigDecimalInt::operator< (BigDecimalInt anotherDec)
 
     else if (first[0] == '-' and second[0] != '-')
         return true;
-        
+
     else {
         BigDecimalInt frst (first);
         BigDecimalInt result = (frst - second);
