@@ -30,7 +30,8 @@ BigDecimalInt :: BigDecimalInt(string decStr): str{decStr}
     if (str[0] == '+'){
         if (str[1] == '-' || str[1] == ' '){
             cout << decStr << "is an invalid number."<<endl;
-        }else{
+        }
+        else{
             str = str.substr(1);
         }
     }
@@ -206,21 +207,99 @@ bool BigDecimalInt::operator< (BigDecimalInt anotherDec)
 
 // -------------------> Operator > overloading <-------------------- \\
 
+bool BigDecimalInt::operator> (BigDecimalInt anotherDec)
+{
+    string first = str;
+    string second = anotherDec.str;
+
+    if (first[0] == '+')
+        first = first.substr(1);
+    if (second[0] == '+')
+        second = second.substr(1);
+
+
+    if (first[0] != '-' and second[0] == '-')
+        return true;
+
+    else if (first[0] == '-' and second[0] != '-')
+        return false;
+
+    else {
+        BigDecimalInt frst (first);
+        BigDecimalInt result = (frst - second);
+        string rslt = result.str;
+
+        if (rslt[0] != '-')
+            return true;
+        else if (first == second)
+            return false;
+        else
+            return false;
+    }
+}
 
 // -------------------> Operator == overloading <-------------------- \\
 
+bool BigDecimalInt::operator== (BigDecimalInt anotherDec)
+{
+    string first = str;
+    string second = anotherDec.str;
 
+    if (first[0] != '-' and second[0] == '-')
+        return false;
+
+    else if (first[0] == '-' and second[0] != '-')
+        return false;
+
+    else {
+        if (first[0] == '+' || first[0] == '-')
+            first = first.substr(1);
+        if (second[0] == '+' || first[0] == '-')
+            second = second.substr(1);
+
+        BigDecimalInt frst (first);
+        BigDecimalInt result = (frst - second);
+        string rslt = result.str;
+
+        if(rslt[0] == '-')
+            return false;
+        else
+        {
+            if(rslt[0] == '+')
+                rslt = rslt.substr(1);
+            for (int i = 0; int(i) < rslt.length(); ++i) {
+                if(rslt[i] != '0')
+                    return false;
+            }
+            return true;
+
+        }
+    }
+}
 
 // -------------------> Operator = overloading <-------------------- \\
 
 
-
 // Size Function
 
+int BigDecimalInt:: Size(BigDecimalInt anotherDec)
+{
+    string num = anotherDec.str;
+    if (num[0] == '+' || num[0] == '-')
+        num = num.substr(1);
+    return num.length();
+}
 
 
 // Sign Function
 
+int BigDecimalInt:: sign(BigDecimalInt anotherDec)
+{
+    if(anotherDec.str[0] != '-')
+        return 1;
+    else
+        return 0;
+}
 
 
 
