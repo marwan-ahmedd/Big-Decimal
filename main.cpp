@@ -1,3 +1,4 @@
+
 #include "BigDecimal.h"
 #include "BigDecimal.cpp"
 
@@ -9,14 +10,15 @@ int main()
     BigDecimalInt num4 = num2 + num1;
     BigDecimalInt num5 = num2 - num1;
     BigDecimalInt num6 = num1 < num2;
+    BigDecimalInt num7 = num1 > num2;
+    BigDecimalInt num8 = num1 == num2;
     cout << "num1 = " << num1 << endl;
     cout << "num2 = " << num2 << endl;
     cout << "num3 = " << num3 << endl;
     cout << "num2 + num1 = " << num4 << endl;
     cout << "num2 - num1 = " << num5 << endl;
     cout << "num1 < num2 = " << num6 << endl;
-
-
-
+    cout << "num1 > num2 = " << num7 << endl;
+    cout << "num1 == num2 = " << num8 << endl;
 
 }
